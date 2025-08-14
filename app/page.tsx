@@ -867,19 +867,19 @@ export default function DigitalSpinnerWebsite() {
               </p>
               <div className="flex space-x-4">
                 <a
-                  href="#"
+                  href="https://www.facebook.com/profile.php?id=61576655903379"
                   className="text-gray-300 hover:text-[#00aeef] transition-colors"
                 >
                   <Facebook className="w-6 h-6" />
                 </a>
                 <a
-                  href="#"
+                  href="https://www.instagram.com/digital_spinner"
                   className="text-gray-300 hover:text-[#00aeef] transition-colors"
                 >
                   <Instagram className="w-6 h-6" />
                 </a>
                 <a
-                  href="#"
+                  href="https://www.linkedin.com/company/digital-spinner"
                   className="text-gray-300 hover:text-[#00aeef] transition-colors"
                 >
                   <Linkedin className="w-6 h-6" />
@@ -979,8 +979,8 @@ export default function DigitalSpinnerWebsite() {
 
           <div className="border-t border-gray-700 mt-12 pt-8 text-center animate-on-scroll">
             <p className="text-gray-300">
-              © 2024 Digital Spinner. All rights reserved. | Spinning success
-              since 2020
+              © 2025 Digital Spinner. All rights reserved. | Spinning success
+              since 2025
             </p>
           </div>
         </div>
