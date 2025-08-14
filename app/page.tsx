@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -17,11 +17,42 @@ import {
   Mail,
   Phone,
   MapPin,
+  ChevronDown,
+  ChevronUp,
 } from "lucide-react"
 
 export default function DigitalSpinnerWebsite() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [currentTestimonial, setCurrentTestimonial] = useState(0)
+  const [openFaq, setOpenFaq] = useState<number | null>(null)
+  const [currentClientIndex, setCurrentClientIndex] = useState(0)
+
+  useEffect(() => {
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: "0px 0px -50px 0px",
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("animate-fade-in-up")
+        }
+      })
+    }, observerOptions)
+
+    const animateElements = document.querySelectorAll(".animate-on-scroll")
+    animateElements.forEach((el) => observer.observe(el))
+
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentClientIndex((prev) => (prev + 1) % Math.ceil(clients.length / 3))
+    }, 3000)
+    return () => clearInterval(interval)
+  }, [])
 
   const services = [
     {
@@ -57,6 +88,18 @@ export default function DigitalSpinnerWebsite() {
     },
   ]
 
+  const clients = [
+    { name: "TechStart Inc.", logo: "/tech-startup-logo.png" },
+    { name: "E-commerce Plus", logo: "/ecommerce-logo.png" },
+    { name: "Local Bistro", logo: "/restaurant-logo.png" },
+    { name: "FinanceFlow", logo: "/finance-company-logo.png" },
+    { name: "HealthCare Pro", logo: "/healthcare-company-logo.png" },
+    { name: "EduTech Solutions", logo: "/edutech-logo.png" },
+    { name: "TechStart Inc.", logo: "/tech-startup-logo.png" },
+    { name: "E-commerce Plus", logo: "/ecommerce-logo.png" },
+    { name: "Local Bistro", logo: "/restaurant-logo.png" },
+  ]
+
   const testimonials = [
     {
       name: "Sarah Johnson",
@@ -81,6 +124,39 @@ export default function DigitalSpinnerWebsite() {
     },
   ]
 
+  const faqs = [
+    {
+      question: "How long does it take to see results from digital marketing?",
+      answer:
+        "Results vary depending on the service. SEO typically shows results in 3-6 months, while PPC and social media campaigns can show immediate results. We provide monthly reports to track progress and adjust strategies accordingly.",
+    },
+    {
+      question: "Do you work with businesses of all sizes?",
+      answer:
+        "Yes! We work with startups, small businesses, and large enterprises. Our flexible pricing plans and customizable services ensure we can meet the needs of any business size and budget.",
+    },
+    {
+      question: "What makes Digital Spinner different from other agencies?",
+      answer:
+        "Our data-driven approach, transparent reporting, and dedicated account management set us apart. We focus on ROI and measurable results, not just vanity metrics. Plus, our team stays updated with the latest digital marketing trends and algorithm changes.",
+    },
+    {
+      question: "Can I cancel my service at any time?",
+      answer:
+        "Yes, we offer flexible contracts with no long-term commitments. You can cancel or modify your service with 30 days notice. We believe in earning your business through results, not binding contracts.",
+    },
+    {
+      question: "Do you provide detailed reporting and analytics?",
+      answer:
+        "We provide comprehensive monthly reports that include key performance indicators, campaign performance, ROI analysis, and actionable insights. You'll always know exactly how your investment is performing.",
+    },
+    {
+      question: "What industries do you specialize in?",
+      answer:
+        "We work across various industries including e-commerce, healthcare, finance, technology, restaurants, and professional services. Our diverse experience allows us to adapt strategies to any industry's unique challenges and opportunities.",
+    },
+  ]
+
   const nextTestimonial = () => {
     setCurrentTestimonial((prev) => (prev + 1) % testimonials.length)
   }
@@ -89,8 +165,66 @@ export default function DigitalSpinnerWebsite() {
     setCurrentTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length)
   }
 
+  const nextClients = () => {
+    setCurrentClientIndex((prev) => (prev + 1) % Math.ceil(clients.length / 3))
+  }
+
+  const prevClients = () => {
+    setCurrentClientIndex((prev) => (prev - 1 + Math.ceil(clients.length / 3)) % Math.ceil(clients.length / 3))
+  }
+
+  const toggleFaq = (index: number) => {
+    setOpenFaq(openFaq === index ? null : index)
+  }
+
   return (
     <div className="min-h-screen bg-white">
+      <style jsx global>{`
+        .animate-fade-in-up {
+          animation: fadeInUp 0.8s ease-out forwards;
+        }
+        
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        
+        .animate-on-scroll {
+          opacity: 0;
+          transform: translateY(30px);
+          transition: all 0.8s ease-out;
+        }
+
+        .client-carousel {
+          animation: slideIn 0.6s ease-out;
+        }
+
+        @keyframes slideIn {
+          from {
+            opacity: 0;
+            transform: translateX(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+
+        .client-logo {
+          transition: all 0.3s ease;
+        }
+
+        .client-logo:hover {
+          transform: scale(1.1) rotate(2deg);
+        }
+      `}</style>
+
       {/* Navbar */}
       <nav className="fixed top-0 w-full z-50 bg-white/95 backdrop-blur-sm border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -162,7 +296,7 @@ export default function DigitalSpinnerWebsite() {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="text-white">
+            <div className="text-white animate-on-scroll">
               <h1 className="text-5xl lg:text-6xl font-bold mb-6 leading-tight">
                 Spin Your Digital
                 <span className="block bg-gradient-to-r from-[#00aeef] to-white bg-clip-text text-transparent">
@@ -177,9 +311,15 @@ export default function DigitalSpinnerWebsite() {
                 Get Started Today
               </Button>
             </div>
-            <div className="relative">
+            <div className="relative animate-on-scroll">
               <div className="aspect-video rounded-lg overflow-hidden shadow-2xl">
-                <video className="w-full h-full object-cover" autoPlay muted loop poster="/digital-marketing-thumbnail.png">
+                <video
+                  className="w-full h-full object-cover"
+                  autoPlay
+                  muted
+                  loop
+                  poster="/digital-marketing-thumbnail.png"
+                >
                   <source src="/placeholder-video.mp4" type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
@@ -189,10 +329,84 @@ export default function DigitalSpinnerWebsite() {
         </div>
       </section>
 
+      {/* Our Clients Section with Carousel */}
+      <section className="py-20 bg-white overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16 animate-on-scroll">
+            <h2 className="text-4xl font-bold text-[#181842] mb-4">Our Trusted Clients</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              We're proud to partner with innovative companies across various industries
+            </p>
+          </div>
+
+          <div className="relative animate-on-scroll">
+            {/* Carousel Container */}
+            <div className="relative overflow-hidden">
+              <div
+                className="flex transition-transform duration-500 ease-in-out client-carousel"
+                style={{ transform: `translateX(-${currentClientIndex * 100}%)` }}
+              >
+                {Array.from({ length: Math.ceil(clients.length / 3) }).map((_, slideIndex) => (
+                  <div key={slideIndex} className="w-full flex-shrink-0">
+                    <div className="grid grid-cols-3 gap-8 px-4">
+                      {clients.slice(slideIndex * 3, slideIndex * 3 + 3).map((client, index) => (
+                        <div
+                          key={`${slideIndex}-${index}`}
+                          className="flex items-center justify-center p-8 bg-gradient-to-br from-gray-50 to-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 client-logo grayscale hover:grayscale-0 border border-gray-100"
+                        >
+                          <img
+                            src={client.logo || "/placeholder.svg"}
+                            alt={client.name}
+                            className="max-h-20 w-auto object-contain filter brightness-75 hover:brightness-100 transition-all duration-300"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Carousel Controls */}
+            <div className="flex justify-center mt-8 gap-4">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={prevClients}
+                className="border-[#00aeef] text-[#00aeef] hover:bg-[#00aeef] hover:text-white bg-white shadow-lg"
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={nextClients}
+                className="border-[#00aeef] text-[#00aeef] hover:bg-[#00aeef] hover:text-white bg-white shadow-lg"
+              >
+                <ChevronRight className="w-4 h-4" />
+              </Button>
+            </div>
+
+            {/* Carousel Indicators */}
+            <div className="flex justify-center mt-4 gap-2">
+              {Array.from({ length: Math.ceil(clients.length / 3) }).map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentClientIndex(index)}
+                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                    currentClientIndex === index ? "bg-[#00aeef] scale-125" : "bg-gray-300 hover:bg-gray-400"
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Services Section */}
       <section id="services" className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
+          <div className="text-center mb-16 animate-on-scroll">
             <h2 className="text-4xl font-bold text-[#181842] mb-4">Our Services</h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Comprehensive digital marketing solutions tailored to elevate your brand and drive measurable results
@@ -201,7 +415,10 @@ export default function DigitalSpinnerWebsite() {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((service, index) => (
-              <Card key={index} className="group hover:shadow-xl transition-all duration-300 border-0 bg-white">
+              <Card
+                key={index}
+                className="group hover:shadow-xl transition-all duration-300 border-0 bg-white animate-on-scroll"
+              >
                 <div className="aspect-video overflow-hidden rounded-t-lg">
                   <img
                     src={service.image || "/placeholder.svg"}
@@ -226,7 +443,7 @@ export default function DigitalSpinnerWebsite() {
       {/* Pricing Section */}
       <section id="pricing" className="py-20 bg-gradient-to-br from-[#181842] to-[#00aeef]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
+          <div className="text-center mb-16 animate-on-scroll">
             <h2 className="text-4xl font-bold text-white mb-4">Choose Your Plan</h2>
             <p className="text-xl text-gray-200 max-w-3xl mx-auto">
               Flexible pricing options designed to fit businesses of all sizes
@@ -235,7 +452,7 @@ export default function DigitalSpinnerWebsite() {
 
           <div className="grid md:grid-cols-3 gap-8">
             {/* Silver Plan */}
-            <Card className="relative bg-white/10 backdrop-blur-sm border-white/20 text-white">
+            <Card className="relative bg-white/10 backdrop-blur-sm border-white/20 text-white animate-on-scroll">
               <CardHeader className="text-center">
                 <CardTitle className="text-2xl mb-2">Silver</CardTitle>
                 <div className="text-4xl font-bold mb-2">
@@ -256,7 +473,6 @@ export default function DigitalSpinnerWebsite() {
 
             {/* Gold Plan */}
             <Card className="relative bg-gradient-to-br from-yellow-500/40 to-yellow-700/40 backdrop-blur-sm border-yellow-500/30 text-white transform scale-105">
-
               <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
                 <span className="bg-gradient-to-r from-yellow-400 to-yellow-600 text-black px-4 py-1 rounded-full text-sm font-semibold">
                   Most Popular
@@ -312,7 +528,7 @@ export default function DigitalSpinnerWebsite() {
       {/* Testimonials Section */}
       <section id="testimonials" className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
+          <div className="text-center mb-16 animate-on-scroll">
             <h2 className="text-4xl font-bold text-[#181842] mb-4">What Our Clients Say</h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Don't just take our word for it - hear from businesses that have transformed their digital presence with
@@ -320,7 +536,7 @@ export default function DigitalSpinnerWebsite() {
             </p>
           </div>
 
-          <div className="relative max-w-4xl mx-auto">
+          <div className="relative max-w-4xl mx-auto animate-on-scroll">
             <Card className="bg-white shadow-xl border-0">
               <CardContent className="p-8">
                 <div className="flex flex-col md:flex-row items-center gap-8">
@@ -370,17 +586,54 @@ export default function DigitalSpinnerWebsite() {
         </div>
       </section>
 
-      {/* Contact Section */}
-      <section id="contact" className="py-20 bg-white">
+      {/* FAQ Section */}
+      <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
+          <div className="text-center mb-16 animate-on-scroll">
+            <h2 className="text-4xl font-bold text-[#181842] mb-4">Frequently Asked Questions</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Get answers to the most common questions about our digital marketing services
+            </p>
+          </div>
+
+          <div className="max-w-4xl mx-auto space-y-4">
+            {faqs.map((faq, index) => (
+              <Card key={index} className="border border-gray-200 animate-on-scroll">
+                <CardHeader
+                  className="cursor-pointer hover:bg-gray-50 transition-colors"
+                  onClick={() => toggleFaq(index)}
+                >
+                  <div className="flex justify-between items-center">
+                    <CardTitle className="text-lg text-[#181842] text-left">{faq.question}</CardTitle>
+                    {openFaq === index ? (
+                      <ChevronUp className="w-5 h-5 text-[#00aeef] flex-shrink-0" />
+                    ) : (
+                      <ChevronDown className="w-5 h-5 text-[#00aeef] flex-shrink-0" />
+                    )}
+                  </div>
+                </CardHeader>
+                {openFaq === index && (
+                  <CardContent className="pt-0">
+                    <p className="text-gray-600 leading-relaxed">{faq.answer}</p>
+                  </CardContent>
+                )}
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Contact Section */}
+      <section id="contact" className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16 animate-on-scroll">
             <h2 className="text-4xl font-bold text-[#181842] mb-4">Get In Touch</h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Ready to spin your digital success story? Let's discuss how we can help grow your business
             </p>
           </div>
 
-          <div className="max-w-2xl mx-auto">
+          <div className="max-w-2xl mx-auto animate-on-scroll">
             <Card className="shadow-xl border-0">
               <CardContent className="p-8">
                 <form className="space-y-6">
@@ -435,7 +688,7 @@ export default function DigitalSpinnerWebsite() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {/* Company Info */}
-            <div>
+            <div className="animate-on-scroll">
               <h3 className="text-2xl font-bold bg-gradient-to-r from-white to-[#00aeef] bg-clip-text text-transparent mb-4">
                 Digital Spinner
               </h3>
@@ -456,7 +709,7 @@ export default function DigitalSpinnerWebsite() {
             </div>
 
             {/* Contact Info */}
-            <div>
+            <div className="animate-on-scroll">
               <h4 className="text-lg font-semibold mb-4">Contact Info</h4>
               <div className="space-y-3">
                 <div className="flex items-center">
@@ -479,7 +732,7 @@ export default function DigitalSpinnerWebsite() {
             </div>
 
             {/* Services */}
-            <div>
+            <div className="animate-on-scroll">
               <h4 className="text-lg font-semibold mb-4">Services</h4>
               <ul className="space-y-2 text-gray-300">
                 <li>
@@ -511,7 +764,7 @@ export default function DigitalSpinnerWebsite() {
             </div>
 
             {/* Map */}
-            <div>
+            <div className="animate-on-scroll">
               <h4 className="text-lg font-semibold mb-4">Find Us</h4>
               <div className="aspect-video bg-gray-700 rounded-lg overflow-hidden">
                 <iframe
@@ -528,7 +781,7 @@ export default function DigitalSpinnerWebsite() {
             </div>
           </div>
 
-          <div className="border-t border-gray-700 mt-12 pt-8 text-center">
+          <div className="border-t border-gray-700 mt-12 pt-8 text-center animate-on-scroll">
             <p className="text-gray-300">© 2024 Digital Spinner. All rights reserved. | Spinning success since 2020</p>
           </div>
         </div>
