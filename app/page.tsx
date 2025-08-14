@@ -1,10 +1,16 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
+import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Star,
   ChevronLeft,
@@ -19,40 +25,42 @@ import {
   MapPin,
   ChevronDown,
   ChevronUp,
-} from "lucide-react"
+} from "lucide-react";
 
 export default function DigitalSpinnerWebsite() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [currentTestimonial, setCurrentTestimonial] = useState(0)
-  const [openFaq, setOpenFaq] = useState<number | null>(null)
-  const [currentClientIndex, setCurrentClientIndex] = useState(0)
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [currentTestimonial, setCurrentTestimonial] = useState(0);
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [currentClientIndex, setCurrentClientIndex] = useState(0);
 
   useEffect(() => {
     const observerOptions = {
       threshold: 0.1,
       rootMargin: "0px 0px -50px 0px",
-    }
+    };
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          entry.target.classList.add("animate-fade-in-up")
+          entry.target.classList.add("animate-fade-in-up");
         }
-      })
-    }, observerOptions)
+      });
+    }, observerOptions);
 
-    const animateElements = document.querySelectorAll(".animate-on-scroll")
-    animateElements.forEach((el) => observer.observe(el))
+    const animateElements = document.querySelectorAll(".animate-on-scroll");
+    animateElements.forEach((el) => observer.observe(el));
 
-    return () => observer.disconnect()
-  }, [])
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentClientIndex((prev) => (prev + 1) % Math.ceil(clients.length / 3))
-    }, 3000)
-    return () => clearInterval(interval)
-  }, [])
+      setCurrentClientIndex(
+        (prev) => (prev + 1) % Math.ceil(clients.length / 3)
+      );
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
 
   const services = [
     {
@@ -63,30 +71,35 @@ export default function DigitalSpinnerWebsite() {
     },
     {
       title: "Search Engine Optimization",
-      description: "Improve your website's visibility and ranking on search engines to drive organic traffic.",
+      description:
+        "Improve your website's visibility and ranking on search engines to drive organic traffic.",
       image: "/seo-analytics-dashboard.png",
     },
     {
       title: "Pay-Per-Click Advertising",
-      description: "Maximize your ROI with targeted PPC campaigns across Google Ads and social media platforms.",
+      description:
+        "Maximize your ROI with targeted PPC campaigns across Google Ads and social media platforms.",
       image: "/ppc-advertising-dashboard.png",
     },
     {
       title: "Content Marketing",
-      description: "Create compelling content that resonates with your audience and drives conversions.",
+      description:
+        "Create compelling content that resonates with your audience and drives conversions.",
       image: "/content-marketing-strategy.png",
     },
     {
       title: "Email Marketing",
-      description: "Build lasting relationships with personalized email campaigns that convert leads into customers.",
+      description:
+        "Build lasting relationships with personalized email campaigns that convert leads into customers.",
       image: "/email-marketing-campaign.png",
     },
     {
       title: "Web Design & Development",
-      description: "Create stunning, responsive websites that provide exceptional user experiences.",
+      description:
+        "Create stunning, responsive websites that provide exceptional user experiences.",
       image: "/modern-web-design-mockup.png",
     },
-  ]
+  ];
 
   const clients = [
     { name: "TechStart Inc.", logo: "/tech-startup-logo.png" },
@@ -98,7 +111,7 @@ export default function DigitalSpinnerWebsite() {
     { name: "TechStart Inc.", logo: "/tech-startup-logo.png" },
     { name: "E-commerce Plus", logo: "/ecommerce-logo.png" },
     { name: "Local Bistro", logo: "/restaurant-logo.png" },
-  ]
+  ];
 
   const testimonials = [
     {
@@ -122,7 +135,7 @@ export default function DigitalSpinnerWebsite() {
       text: "Their social media strategy brought us 500+ new customers. Digital Spinner truly understands digital marketing.",
       image: "/professional-woman-headshot.png",
     },
-  ]
+  ];
 
   const faqs = [
     {
@@ -155,27 +168,33 @@ export default function DigitalSpinnerWebsite() {
       answer:
         "We work across various industries including e-commerce, healthcare, finance, technology, restaurants, and professional services. Our diverse experience allows us to adapt strategies to any industry's unique challenges and opportunities.",
     },
-  ]
+  ];
 
   const nextTestimonial = () => {
-    setCurrentTestimonial((prev) => (prev + 1) % testimonials.length)
-  }
+    setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
+  };
 
   const prevTestimonial = () => {
-    setCurrentTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length)
-  }
+    setCurrentTestimonial(
+      (prev) => (prev - 1 + testimonials.length) % testimonials.length
+    );
+  };
 
   const nextClients = () => {
-    setCurrentClientIndex((prev) => (prev + 1) % Math.ceil(clients.length / 3))
-  }
+    setCurrentClientIndex((prev) => (prev + 1) % Math.ceil(clients.length / 3));
+  };
 
   const prevClients = () => {
-    setCurrentClientIndex((prev) => (prev - 1 + Math.ceil(clients.length / 3)) % Math.ceil(clients.length / 3))
-  }
+    setCurrentClientIndex(
+      (prev) =>
+        (prev - 1 + Math.ceil(clients.length / 3)) %
+        Math.ceil(clients.length / 3)
+    );
+  };
 
   const toggleFaq = (index: number) => {
-    setOpenFaq(openFaq === index ? null : index)
-  }
+    setOpenFaq(openFaq === index ? null : index);
+  };
 
   return (
     <div className="min-h-screen bg-white">
@@ -183,7 +202,7 @@ export default function DigitalSpinnerWebsite() {
         .animate-fade-in-up {
           animation: fadeInUp 0.8s ease-out forwards;
         }
-        
+
         @keyframes fadeInUp {
           from {
             opacity: 0;
@@ -194,7 +213,7 @@ export default function DigitalSpinnerWebsite() {
             transform: translateY(0);
           }
         }
-        
+
         .animate-on-scroll {
           opacity: 0;
           transform: translateY(30px);
@@ -238,19 +257,46 @@ export default function DigitalSpinnerWebsite() {
             {/* Desktop Menu */}
             <div className="hidden md:block">
               <div className="ml-10 flex items-baseline space-x-8">
-                <a href="#home" className="text-[#181842] hover:text-[#00aeef] transition-colors">
+                <a
+                  href="#home"
+                  className="text-[#181842] hover:text-[#00aeef] transition-colors"
+                >
                   Home
                 </a>
-                <a href="#services" className="text-[#181842] hover:text-[#00aeef] transition-colors">
+                <a
+                  href="#services"
+                  className="text-[#181842] hover:text-[#00aeef] transition-colors"
+                >
                   Services
                 </a>
-                <a href="#pricing" className="text-[#181842] hover:text-[#00aeef] transition-colors">
+                <a
+                  href="#pricing"
+                  className="text-[#181842] hover:text-[#00aeef] transition-colors"
+                >
                   Pricing
                 </a>
-                <a href="#testimonials" className="text-[#181842] hover:text-[#00aeef] transition-colors">
+                <a
+                  href="#clients"
+                  className="text-[#181842] hover:text-[#00aeef] transition-colors"
+                >
+                  Our Clients
+                </a>
+                <a
+                  href="#testimonials"
+                  className="text-[#181842] hover:text-[#00aeef] transition-colors"
+                >
                   Testimonials
                 </a>
-                <a href="#contact" className="text-[#181842] hover:text-[#00aeef] transition-colors">
+                <a
+                  href="#faq"
+                  className="block px-3 py-2 text-[#181842] hover:text-[#00aeef]"
+                >
+                  FAQ
+                </a>
+                <a
+                  href="#contact"
+                  className="text-[#181842] hover:text-[#00aeef] transition-colors"
+                >
                   Contact Us
                 </a>
               </div>
@@ -258,8 +304,16 @@ export default function DigitalSpinnerWebsite() {
 
             {/* Mobile menu button */}
             <div className="md:hidden">
-              <Button variant="ghost" size="sm" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-                {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+              >
+                {isMenuOpen ? (
+                  <X className="h-6 w-6" />
+                ) : (
+                  <Menu className="h-6 w-6" />
+                )}
               </Button>
             </div>
           </div>
@@ -269,19 +323,46 @@ export default function DigitalSpinnerWebsite() {
         {isMenuOpen && (
           <div className="md:hidden bg-white border-t border-gray-200">
             <div className="px-2 pt-2 pb-3 space-y-1">
-              <a href="#home" className="block px-3 py-2 text-[#181842] hover:text-[#00aeef]">
+              <a
+                href="#home"
+                className="block px-3 py-2 text-[#181842] hover:text-[#00aeef]"
+              >
                 Home
               </a>
-              <a href="#services" className="block px-3 py-2 text-[#181842] hover:text-[#00aeef]">
+              <a
+                href="#services"
+                className="block px-3 py-2 text-[#181842] hover:text-[#00aeef]"
+              >
                 Services
               </a>
-              <a href="#pricing" className="block px-3 py-2 text-[#181842] hover:text-[#00aeef]">
+              <a
+                href="#pricing"
+                className="block px-3 py-2 text-[#181842] hover:text-[#00aeef]"
+              >
                 Pricing
               </a>
-              <a href="#testimonials" className="block px-3 py-2 text-[#181842] hover:text-[#00aeef]">
+              <a
+                href="#clients"
+                className="block px-3 py-2 text-[#181842] hover:text-[#00aeef]"
+              >
+                Our Clients
+              </a>
+              <a
+                href="#testimonials"
+                className="block px-3 py-2 text-[#181842] hover:text-[#00aeef]"
+              >
                 Testimonials
               </a>
-              <a href="#contact" className="block px-3 py-2 text-[#181842] hover:text-[#00aeef]">
+              <a
+                href="#faq"
+                className="block px-3 py-2 text-[#181842] hover:text-[#00aeef]"
+              >
+                FAQ
+              </a>
+              <a
+                href="#contact"
+                className="block px-3 py-2 text-[#181842] hover:text-[#00aeef]"
+              >
                 Contact Us
               </a>
             </div>
@@ -304,10 +385,13 @@ export default function DigitalSpinnerWebsite() {
                 </span>
               </h1>
               <p className="text-xl mb-8 text-gray-200">
-                Transform your business with cutting-edge digital marketing strategies that drive real results and
-                accelerate growth.
+                Transform your business with cutting-edge digital marketing
+                strategies that drive real results and accelerate growth.
               </p>
-              <Button size="lg" className="bg-[#00aeef] hover:bg-[#0099d4] text-white px-8 py-3 text-lg">
+              <Button
+                size="lg"
+                className="bg-[#00aeef] hover:bg-[#0099d4] text-white px-8 py-3 text-lg"
+              >
                 Get Started Today
               </Button>
             </div>
@@ -330,12 +414,15 @@ export default function DigitalSpinnerWebsite() {
       </section>
 
       {/* Our Clients Section with Carousel */}
-      <section className="py-20 bg-white overflow-hidden">
+      <section id="clients" className="py-20 bg-white overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 animate-on-scroll">
-            <h2 className="text-4xl font-bold text-[#181842] mb-4">Our Trusted Clients</h2>
+            <h2 className="text-4xl font-bold text-[#181842] mb-4">
+              Our Trusted Clients
+            </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              We're proud to partner with innovative companies across various industries
+              We're proud to partner with innovative companies across various
+              industries
             </p>
           </div>
 
@@ -344,26 +431,32 @@ export default function DigitalSpinnerWebsite() {
             <div className="relative overflow-hidden">
               <div
                 className="flex transition-transform duration-500 ease-in-out client-carousel"
-                style={{ transform: `translateX(-${currentClientIndex * 100}%)` }}
+                style={{
+                  transform: `translateX(-${currentClientIndex * 100}%)`,
+                }}
               >
-                {Array.from({ length: Math.ceil(clients.length / 3) }).map((_, slideIndex) => (
-                  <div key={slideIndex} className="w-full flex-shrink-0">
-                    <div className="grid grid-cols-3 gap-8 px-4">
-                      {clients.slice(slideIndex * 3, slideIndex * 3 + 3).map((client, index) => (
-                        <div
-                          key={`${slideIndex}-${index}`}
-                          className="flex items-center justify-center p-8 bg-gradient-to-br from-gray-50 to-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 client-logo grayscale hover:grayscale-0 border border-gray-100"
-                        >
-                          <img
-                            src={client.logo || "/placeholder.svg"}
-                            alt={client.name}
-                            className="max-h-20 w-auto object-contain filter brightness-75 hover:brightness-100 transition-all duration-300"
-                          />
-                        </div>
-                      ))}
+                {Array.from({ length: Math.ceil(clients.length / 3) }).map(
+                  (_, slideIndex) => (
+                    <div key={slideIndex} className="w-full flex-shrink-0">
+                      <div className="grid grid-cols-3 gap-8 px-4">
+                        {clients
+                          .slice(slideIndex * 3, slideIndex * 3 + 3)
+                          .map((client, index) => (
+                            <div
+                              key={`${slideIndex}-${index}`}
+                              className="flex items-center justify-center p-8 bg-gradient-to-br from-gray-50 to-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 client-logo grayscale hover:grayscale-0 border border-gray-100"
+                            >
+                              <img
+                                src={client.logo || "/placeholder.svg"}
+                                alt={client.name}
+                                className="max-h-20 w-auto object-contain filter brightness-75 hover:brightness-100 transition-all duration-300"
+                              />
+                            </div>
+                          ))}
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  )
+                )}
               </div>
             </div>
 
@@ -389,15 +482,19 @@ export default function DigitalSpinnerWebsite() {
 
             {/* Carousel Indicators */}
             <div className="flex justify-center mt-4 gap-2">
-              {Array.from({ length: Math.ceil(clients.length / 3) }).map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentClientIndex(index)}
-                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                    currentClientIndex === index ? "bg-[#00aeef] scale-125" : "bg-gray-300 hover:bg-gray-400"
-                  }`}
-                />
-              ))}
+              {Array.from({ length: Math.ceil(clients.length / 3) }).map(
+                (_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentClientIndex(index)}
+                    className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                      currentClientIndex === index
+                        ? "bg-[#00aeef] scale-125"
+                        : "bg-gray-300 hover:bg-gray-400"
+                    }`}
+                  />
+                )
+              )}
             </div>
           </div>
         </div>
@@ -407,9 +504,12 @@ export default function DigitalSpinnerWebsite() {
       <section id="services" className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 animate-on-scroll">
-            <h2 className="text-4xl font-bold text-[#181842] mb-4">Our Services</h2>
+            <h2 className="text-4xl font-bold text-[#181842] mb-4">
+              Our Services
+            </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Comprehensive digital marketing solutions tailored to elevate your brand and drive measurable results
+              Comprehensive digital marketing solutions tailored to elevate your
+              brand and drive measurable results
             </p>
           </div>
 
@@ -432,7 +532,9 @@ export default function DigitalSpinnerWebsite() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <CardDescription className="text-gray-600">{service.description}</CardDescription>
+                  <CardDescription className="text-gray-600">
+                    {service.description}
+                  </CardDescription>
                 </CardContent>
               </Card>
             ))}
@@ -441,10 +543,15 @@ export default function DigitalSpinnerWebsite() {
       </section>
 
       {/* Pricing Section */}
-      <section id="pricing" className="py-20 bg-gradient-to-br from-[#181842] to-[#00aeef]">
+      <section
+        id="pricing"
+        className="py-20 bg-gradient-to-br from-[#181842] to-[#00aeef]"
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 animate-on-scroll">
-            <h2 className="text-4xl font-bold text-white mb-4">Choose Your Plan</h2>
+            <h2 className="text-4xl font-bold text-white mb-4">
+              Choose Your Plan
+            </h2>
             <p className="text-xl text-gray-200 max-w-3xl mx-auto">
               Flexible pricing options designed to fit businesses of all sizes
             </p>
@@ -458,16 +565,26 @@ export default function DigitalSpinnerWebsite() {
                 <div className="text-4xl font-bold mb-2">
                   $999<span className="text-lg font-normal">/month</span>
                 </div>
-                <CardDescription className="text-gray-200">Perfect for small businesses</CardDescription>
+                <CardDescription className="text-gray-200">
+                  Perfect for small businesses
+                </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <ul className="space-y-3">
-                  <li className="flex items-center">✓ Social Media Management</li>
-                  <li className="flex items-center">✓ Basic SEO Optimization</li>
-                  <li className="flex items-center">✓ Monthly Analytics Report</li>
+                  <li className="flex items-center">
+                    ✓ Social Media Management
+                  </li>
+                  <li className="flex items-center">
+                    ✓ Basic SEO Optimization
+                  </li>
+                  <li className="flex items-center">
+                    ✓ Monthly Analytics Report
+                  </li>
                   <li className="flex items-center">✓ Email Support</li>
                 </ul>
-                <Button className="w-full bg-white text-[#181842] hover:bg-gray-100">Get Started</Button>
+                <Button className="w-full bg-white text-[#181842] hover:bg-gray-100">
+                  Get Started
+                </Button>
               </CardContent>
             </Card>
 
@@ -483,14 +600,20 @@ export default function DigitalSpinnerWebsite() {
                 <div className="text-4xl font-bold mb-2">
                   $1999<span className="text-lg font-normal">/month</span>
                 </div>
-                <CardDescription className="text-gray-200">Ideal for growing businesses</CardDescription>
+                <CardDescription className="text-gray-200">
+                  Ideal for growing businesses
+                </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <ul className="space-y-3">
                   <li className="flex items-center">✓ Everything in Silver</li>
-                  <li className="flex items-center">✓ PPC Campaign Management</li>
+                  <li className="flex items-center">
+                    ✓ PPC Campaign Management
+                  </li>
                   <li className="flex items-center">✓ Content Marketing</li>
-                  <li className="flex items-center">✓ Weekly Analytics Reports</li>
+                  <li className="flex items-center">
+                    ✓ Weekly Analytics Reports
+                  </li>
                   <li className="flex items-center">✓ Phone & Email Support</li>
                 </ul>
                 <Button className="w-full bg-gradient-to-r from-yellow-400 to-yellow-600 text-black hover:from-yellow-500 hover:to-yellow-700">
@@ -506,14 +629,22 @@ export default function DigitalSpinnerWebsite() {
                 <div className="text-4xl font-bold mb-2">
                   $3999<span className="text-lg font-normal">/month</span>
                 </div>
-                <CardDescription className="text-gray-200">Enterprise-level solutions</CardDescription>
+                <CardDescription className="text-gray-200">
+                  Enterprise-level solutions
+                </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <ul className="space-y-3">
                   <li className="flex items-center">✓ Everything in Gold</li>
-                  <li className="flex items-center">✓ Custom Web Development</li>
-                  <li className="flex items-center">✓ Advanced Analytics & BI</li>
-                  <li className="flex items-center">✓ Dedicated Account Manager</li>
+                  <li className="flex items-center">
+                    ✓ Custom Web Development
+                  </li>
+                  <li className="flex items-center">
+                    ✓ Advanced Analytics & BI
+                  </li>
+                  <li className="flex items-center">
+                    ✓ Dedicated Account Manager
+                  </li>
                   <li className="flex items-center">✓ 24/7 Priority Support</li>
                 </ul>
                 <Button className="w-full bg-gradient-to-r from-blue-400 to-purple-600 text-white hover:from-blue-500 hover:to-purple-700">
@@ -529,10 +660,12 @@ export default function DigitalSpinnerWebsite() {
       <section id="testimonials" className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 animate-on-scroll">
-            <h2 className="text-4xl font-bold text-[#181842] mb-4">What Our Clients Say</h2>
+            <h2 className="text-4xl font-bold text-[#181842] mb-4">
+              What Our Clients Say
+            </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Don't just take our word for it - hear from businesses that have transformed their digital presence with
-              us
+              Don't just take our word for it - hear from businesses that have
+              transformed their digital presence with us
             </p>
           </div>
 
@@ -542,21 +675,35 @@ export default function DigitalSpinnerWebsite() {
                 <div className="flex flex-col md:flex-row items-center gap-8">
                   <div className="flex-shrink-0">
                     <img
-                      src={testimonials[currentTestimonial].image || "/placeholder.svg"}
+                      src={
+                        testimonials[currentTestimonial].image ||
+                        "/placeholder.svg"
+                      }
                       alt={testimonials[currentTestimonial].name}
                       className="w-20 h-20 rounded-full object-cover"
                     />
                   </div>
                   <div className="flex-1 text-center md:text-left">
                     <div className="flex justify-center md:justify-start mb-4">
-                      {[...Array(testimonials[currentTestimonial].rating)].map((_, i) => (
-                        <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
-                      ))}
+                      {[...Array(testimonials[currentTestimonial].rating)].map(
+                        (_, i) => (
+                          <Star
+                            key={i}
+                            className="w-5 h-5 fill-yellow-400 text-yellow-400"
+                          />
+                        )
+                      )}
                     </div>
-                    <p className="text-lg text-gray-700 mb-4 italic">"{testimonials[currentTestimonial].text}"</p>
+                    <p className="text-lg text-gray-700 mb-4 italic">
+                      "{testimonials[currentTestimonial].text}"
+                    </p>
                     <div>
-                      <p className="font-semibold text-[#181842]">{testimonials[currentTestimonial].name}</p>
-                      <p className="text-gray-600">{testimonials[currentTestimonial].company}</p>
+                      <p className="font-semibold text-[#181842]">
+                        {testimonials[currentTestimonial].name}
+                      </p>
+                      <p className="text-gray-600">
+                        {testimonials[currentTestimonial].company}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -587,24 +734,32 @@ export default function DigitalSpinnerWebsite() {
       </section>
 
       {/* FAQ Section */}
-      <section className="py-20 bg-white">
+      <section id="faq" className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 animate-on-scroll">
-            <h2 className="text-4xl font-bold text-[#181842] mb-4">Frequently Asked Questions</h2>
+            <h2 className="text-4xl font-bold text-[#181842] mb-4">
+              Frequently Asked Questions
+            </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Get answers to the most common questions about our digital marketing services
+              Get answers to the most common questions about our digital
+              marketing services
             </p>
           </div>
 
           <div className="max-w-4xl mx-auto space-y-4">
             {faqs.map((faq, index) => (
-              <Card key={index} className="border border-gray-200 animate-on-scroll">
+              <Card
+                key={index}
+                className="border border-gray-200 animate-on-scroll"
+              >
                 <CardHeader
                   className="cursor-pointer hover:bg-gray-50 transition-colors"
                   onClick={() => toggleFaq(index)}
                 >
                   <div className="flex justify-between items-center">
-                    <CardTitle className="text-lg text-[#181842] text-left">{faq.question}</CardTitle>
+                    <CardTitle className="text-lg text-[#181842] text-left">
+                      {faq.question}
+                    </CardTitle>
                     {openFaq === index ? (
                       <ChevronUp className="w-5 h-5 text-[#00aeef] flex-shrink-0" />
                     ) : (
@@ -614,7 +769,9 @@ export default function DigitalSpinnerWebsite() {
                 </CardHeader>
                 {openFaq === index && (
                   <CardContent className="pt-0">
-                    <p className="text-gray-600 leading-relaxed">{faq.answer}</p>
+                    <p className="text-gray-600 leading-relaxed">
+                      {faq.answer}
+                    </p>
                   </CardContent>
                 )}
               </Card>
@@ -627,9 +784,12 @@ export default function DigitalSpinnerWebsite() {
       <section id="contact" className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 animate-on-scroll">
-            <h2 className="text-4xl font-bold text-[#181842] mb-4">Get In Touch</h2>
+            <h2 className="text-4xl font-bold text-[#181842] mb-4">
+              Get In Touch
+            </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Ready to spin your digital success story? Let's discuss how we can help grow your business
+              Ready to spin your digital success story? Let's discuss how we can
+              help grow your business
             </p>
           </div>
 
@@ -638,7 +798,10 @@ export default function DigitalSpinnerWebsite() {
               <CardContent className="p-8">
                 <form className="space-y-6">
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-[#181842] mb-2">
+                    <label
+                      htmlFor="email"
+                      className="block text-sm font-medium text-[#181842] mb-2"
+                    >
                       Email Address
                     </label>
                     <Input
@@ -650,7 +813,10 @@ export default function DigitalSpinnerWebsite() {
                   </div>
 
                   <div>
-                    <label htmlFor="phone" className="block text-sm font-medium text-[#181842] mb-2">
+                    <label
+                      htmlFor="phone"
+                      className="block text-sm font-medium text-[#181842] mb-2"
+                    >
                       Phone Number
                     </label>
                     <Input
@@ -662,7 +828,10 @@ export default function DigitalSpinnerWebsite() {
                   </div>
 
                   <div>
-                    <label htmlFor="message" className="block text-sm font-medium text-[#181842] mb-2">
+                    <label
+                      htmlFor="message"
+                      className="block text-sm font-medium text-[#181842] mb-2"
+                    >
                       Message
                     </label>
                     <Textarea
@@ -693,16 +862,26 @@ export default function DigitalSpinnerWebsite() {
                 Digital Spinner
               </h3>
               <p className="text-gray-300 mb-6">
-                Spinning digital success stories for businesses worldwide through innovative marketing strategies.
+                Spinning digital success stories for businesses worldwide
+                through innovative marketing strategies.
               </p>
               <div className="flex space-x-4">
-                <a href="#" className="text-gray-300 hover:text-[#00aeef] transition-colors">
+                <a
+                  href="#"
+                  className="text-gray-300 hover:text-[#00aeef] transition-colors"
+                >
                   <Facebook className="w-6 h-6" />
                 </a>
-                <a href="#" className="text-gray-300 hover:text-[#00aeef] transition-colors">
+                <a
+                  href="#"
+                  className="text-gray-300 hover:text-[#00aeef] transition-colors"
+                >
                   <Instagram className="w-6 h-6" />
                 </a>
-                <a href="#" className="text-gray-300 hover:text-[#00aeef] transition-colors">
+                <a
+                  href="#"
+                  className="text-gray-300 hover:text-[#00aeef] transition-colors"
+                >
                   <Linkedin className="w-6 h-6" />
                 </a>
               </div>
@@ -714,7 +893,9 @@ export default function DigitalSpinnerWebsite() {
               <div className="space-y-3">
                 <div className="flex items-center">
                   <Mail className="w-5 h-5 mr-3 text-[#00aeef]" />
-                  <span className="text-gray-300">hello@digitalspinner.com</span>
+                  <span className="text-gray-300">
+                    hello@digitalspinner.com
+                  </span>
                 </div>
                 <div className="flex items-center">
                   <Phone className="w-5 h-5 mr-3 text-[#00aeef]" />
@@ -736,27 +917,42 @@ export default function DigitalSpinnerWebsite() {
               <h4 className="text-lg font-semibold mb-4">Services</h4>
               <ul className="space-y-2 text-gray-300">
                 <li>
-                  <a href="#" className="hover:text-[#00aeef] transition-colors">
+                  <a
+                    href="#"
+                    className="hover:text-[#00aeef] transition-colors"
+                  >
                     Social Media Marketing
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-[#00aeef] transition-colors">
+                  <a
+                    href="#"
+                    className="hover:text-[#00aeef] transition-colors"
+                  >
                     SEO Optimization
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-[#00aeef] transition-colors">
+                  <a
+                    href="#"
+                    className="hover:text-[#00aeef] transition-colors"
+                  >
                     PPC Advertising
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-[#00aeef] transition-colors">
+                  <a
+                    href="#"
+                    className="hover:text-[#00aeef] transition-colors"
+                  >
                     Content Marketing
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-[#00aeef] transition-colors">
+                  <a
+                    href="#"
+                    className="hover:text-[#00aeef] transition-colors"
+                  >
                     Web Development
                   </a>
                 </li>
@@ -782,10 +978,13 @@ export default function DigitalSpinnerWebsite() {
           </div>
 
           <div className="border-t border-gray-700 mt-12 pt-8 text-center animate-on-scroll">
-            <p className="text-gray-300">© 2024 Digital Spinner. All rights reserved. | Spinning success since 2020</p>
+            <p className="text-gray-300">
+              © 2024 Digital Spinner. All rights reserved. | Spinning success
+              since 2020
+            </p>
           </div>
         </div>
       </footer>
     </div>
-  )
+  );
 }
